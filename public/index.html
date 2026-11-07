@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d18">
+  <meta name="description" content="LYNX AI — مساحة ذكية للمحادثة والإبداع والإنتاجية.">
+  <title>LYNX AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <aside class="sidebar glass" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div><div class="brand-name">LYNX<span>AI</span></div><small>INTELLIGENCE, REFINED</small></div>
+        <button class="icon-btn mobile-close" id="closeSidebar" aria-label="إغلاق القائمة">×</button>
+      </div>
+      <button class="new-chat" id="newChat"><span>＋</span> محادثة جديدة <kbd>⌘ K</kbd></button>
+      <div class="side-label"><span>مساحة العمل</span><span class="live-dot"></span></div>
+      <div class="conversation-list" id="conversationList"></div>
+      <div class="sidebar-bottom">
+        <div class="model-chip"><span class="pulse"></span><div><b>Gemini 3.8 Flash</b><small>متصل عبر LYNX Core</small></div><span class="model-tag">AI</span></div>
+        <div class="side-actions">
+          <button class="side-action" id="themeToggle"><span>◐</span> المظهر <small id="themeLabel">داكن</small></button>
+          <button class="side-action" id="paletteToggle"><span>◈</span> لون الواجهة <small id="paletteLabel">Violet</small></button>
+        </div>
+        <div class="profile">
+          <div class="avatar">L</div><div class="profile-text"><b>Guest user</b><small>جلسة خاصة بهذا المتصفح</small></div><span class="profile-menu">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-trigger" id="openSidebar" aria-label="القائمة">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><i>/</i><b id="currentTitle">محادثة جديدة</b></div>
+        <div class="topbar-right">
+          <div class="secure-label"><span class="secure-dot"></span> مساحة خاصة</div>
+          <button class="icon-btn" id="topTheme" title="تغيير المظهر">◐</button>
+        </div>
+      </header>
+
+      <section class="chat-area" id="chatArea">
+        <div class="welcome" id="welcome">
+          <div class="hero-orb"><div class="orb-core">L</div><i class="orb-ring ring-a"></i><i class="orb-ring ring-b"></i><i class="orb-spark spark-a"></i><i class="orb-spark spark-b"></i></div>
+          <div class="eyebrow"><span></span> YOUR INTELLIGENT SPACE</div>
+          <h1>أهلاً بك في <em>LYNX AI</em></h1>
+          <p>فكّر بحرية. اسأل بعمق. أنجز أكثر.<br>ما الذي ترغب في استكشافه اليوم؟ ✨</p>
+          <div class="suggestions">
+            <button class="suggestion" data-prompt="اشرح لي مفهوم الذكاء الاصطناعي بطريقة مبسطة مع أمثلة."><span class="suggestion-icon">✦</span><span><b>تعلّم شيئاً جديداً</b><small>اشرح مفهوماً معقداً ببساطة</small></span><i>↗</i></button>
+            <button class="suggestion" data-prompt="ساعدني في كتابة كود Python احترافي واشرحه خطوة بخطوة."><span class="suggestion-icon">⌘</span><span><b>اكتب بعض الأكواد</b><small>حوّل أفكارك إلى مشاريع</small></span><i>↗</i></button>
+            <button class="suggestion" data-prompt="ساعدني في تنظيم يومي ووضع خطة إنتاجية واقعية."><span class="suggestion-icon">◷</span><span><b>خطّط ليومي</b><small>نظّم وقتك بذكاء</small></span><i>↗</i></button>
+            <button class="suggestion" data-prompt="حلّل هذا الموضوع وقدم لي أفكاراً مبتكرة وعملية."><span class="suggestion-icon">⌁</span><span><b>استكشف فكرة</b><small>حلّل وابتكر وتعمّق</small></span><i>↗</i></button>
+          </div>
+        </div>
+        <div class="messages" id="messages"></div>
+      </section>
+
+      <footer class="composer-wrap">
+        <div class="attachment-preview" id="attachmentPreview"></div>
+        <form class="composer glass" id="chatForm">
+          <input type="file" id="fileInput" hidden accept="image/*,.pdf,.txt,.md,.csv,.json,.js,.py,.html,.css">
+          <button type="button" class="attach-btn" id="attachBtn" title="إرفاق صورة أو ملف">＋</button>
+          <textarea id="messageInput" rows="1" placeholder="اكتب رسالتك إلى LYNX AI..." autocomplete="off"></textarea>
+          <div class="composer-tools"><span class="composer-hint">↵ إرسال · Shift + ↵ سطر جديد</span><button class="send-btn" id="sendBtn" type="submit" aria-label="إرسال">↑</button></div>
+        </form>
+        <div class="disclaimer">قد يخطئ الذكاء الاصطناعي أحياناً. تحقّق من المعلومات المهمة.</div>
+        <div class="copyright">© 2026 <b>LYNX AI</b> · Developed with precision by <b>Lahcen</b></div>
+      </footer>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <div class="palette-pop glass" id="palettePop">
+    <div class="palette-head"><b>لون الواجهة</b><button id="closePalette">×</button></div>
+    <div class="swatches">
+      <button data-color="violet" class="swatch active" style="--sw:#9b7bff" aria-label="بنفسجي"></button>
+      <button data-color="blue" class="swatch" style="--sw:#4d9fff" aria-label="أزرق"></button>
+      <button data-color="cyan" class="swatch" style="--sw:#42d9d0" aria-label="سماوي"></button>
+      <button data-color="emerald" class="swatch" style="--sw:#48c98b" aria-label="أخضر"></button>
+      <button data-color="rose" class="swatch" style="--sw:#ff729e" aria-label="وردي"></button>
+      <button data-color="amber" class="swatch" style="--sw:#f4b65f" aria-label="ذهبي"></button>
+    </div>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
